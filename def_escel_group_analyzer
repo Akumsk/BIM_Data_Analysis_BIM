@@ -14,32 +14,40 @@ df_test.rename(columns = {"No." : "No",
                                         "Шифр тома" : "Tom", 
                                         "Наименование" : "Description", 
                                         "Ед. изм" : "Ed_izm",
-                                        "Кол-во" : "Kol_vo"}, inplace=True)
+                                        "Кол-во" : "Kol_vo",
+                                         "Unnamed: 0" : "Level_gr",
+                                         }, inplace=True)
 
 #df_test.drop('gr_1', axis=1, inplace=True)
-df_test.insert(6, 'gr_1', None)
-df_test.insert(7, 'gr_2', None)
-df_test.insert(8, 'gr_3', None)
+df_test.insert(7,'gr_1', None)
+df_test.insert(8, 'gr_2', None)
+df_test.insert(9, 'gr_3', None)
+df_test.insert(10, 'gr_4', None)
+df_test.insert(11, 'gr_5', None)
+df_test.Kol_vo = pd.to_numeric(df_test.Kol_vo, errors='coerce')
 
-for i in range(1,len(df_test)):
-    if ((df_test.loc[i, 'Kol_vo'] > 0) & (pd.isna(df_test.loc[i-1, 'Kol_vo']) == True)):
-        df_test.loc[i, 'gr_1'] = df_test.loc[i-1, 'Description']
-for i in range(2,len(df_test)):
-    if ((df_test.loc[i, 'Kol_vo'] > 0) & (pd.isna(df_test.loc[i-1, 'Kol_vo']) == True) & (pd.isna(df_test.loc[i-2, 'Kol_vo']) == True)):
-        df_test.loc[i, 'gr_2'] = df_test.loc[i-2, 'Description']
-for i in range(3,len(df_test)):
-    if ((df_test.loc[i, 'Kol_vo'] > 0) & (pd.isna(df_test.loc[i-1, 'Kol_vo']) == True) & (pd.isna(df_test.loc[i-3, 'Kol_vo']) == True)):
-        df_test.loc[i, 'gr_3'] = df_test.loc[i-3, 'Description']        
-
+for i in range(0,len(df_test)):
+    if ((pd.isna(df_test.loc[i, 'Kol_vo']) == True) & (df_test.loc[i,'Level_gr'] == 1)):
+        df_test.loc[i, 'gr_1'] = df_test.loc[i, 'Description']
+    elif ((pd.isna(df_test.loc[i, 'Kol_vo']) == True) & (df_test.loc[i,'Level_gr'] == 2)):
+        df_test.loc[i, 'gr_2'] = df_test.loc[i, 'Description']       
+    elif ((pd.isna(df_test.loc[i, 'Kol_vo']) == True) & (df_test.loc[i,'Level_gr'] == 3)):
+        df_test.loc[i, 'gr_3'] = df_test.loc[i, 'Description'] 
+    elif ((pd.isna(df_test.loc[i, 'Kol_vo']) == True) & (df_test.loc[i,'Level_gr'] == 4)):
+        df_test.loc[i, 'gr_4'] = df_test.loc[i, 'Description']         
+        
         
 for i in range(1,len(df_test)):
-    if ((pd.isna(df_test.loc[i, 'gr_1']) == True) & (pd.isna(df_test.loc[i, 'Kol_vo']) == False)):
+    if ((pd.isna(df_test.loc[i, 'gr_1']) == True)):
         df_test.loc[i, 'gr_1'] = df_test.loc[i-1, 'gr_1']
 for i in range(1,len(df_test)):
-    if ((pd.isna(df_test.loc[i, 'gr_2']) == True) & (pd.isna(df_test.loc[i, 'Kol_vo']) == False)):
+    if ((pd.isna(df_test.loc[i, 'gr_2']) == True)):
         df_test.loc[i, 'gr_2'] = df_test.loc[i-1, 'gr_2']      
 for i in range(1,len(df_test)):
-    if ((pd.isna(df_test.loc[i, 'gr_3']) == True) & (pd.isna(df_test.loc[i, 'Kol_vo']) == False)):
-        df_test.loc[i, 'gr_3'] = df_test.loc[i-1, 'gr_3']            
+    if ((pd.isna(df_test.loc[i, 'gr_3']) == True)):
+        df_test.loc[i, 'gr_3'] = df_test.loc[i-1, 'gr_3'] 
+for i in range(1,len(df_test)):
+    if ((pd.isna(df_test.loc[i, 'gr_4']) == True)):
+        df_test.loc[i, 'gr_4'] = df_test.loc[i-1, 'gr_4']             
         
 df_test.head(20) 
