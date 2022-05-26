@@ -1,3 +1,5 @@
+#Function create collumns (gr_1, gr_2...) according grouping in Excel based on level 
+
 import pandas as pd
 import numpy as np
 import matplotlib
