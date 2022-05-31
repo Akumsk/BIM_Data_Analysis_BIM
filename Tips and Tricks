@@ -1,0 +1,10 @@
+import telebot
+from telebot import apihelper # Нужно для работы Proxy
+import config # Импорт config.py
+import urllib.request # request нужен для загрузки файлов от пользователя
+ 
+bot = telebot.TeleBot(config.token) # Передаём токен из файла config.py
+apihelper.proxy = {'http':config.proxy} # Передаём Proxy из файла config.py
+ 
+ 
+bot.polling() # запускаем бота
