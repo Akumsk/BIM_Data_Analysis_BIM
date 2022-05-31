@@ -8,3 +8,8 @@ apihelper.proxy = {'http':config.proxy} # Передаём Proxy из файла
  
  
 bot.polling() # запускаем бота
+
+
+
+if not os.path.isdir("folder"):
+     os.mkdir("folder")
